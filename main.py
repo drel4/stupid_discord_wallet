@@ -177,8 +177,8 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
                     file_count = sum([len(files) for _, _, files in os.walk(f'{dbfolder}//checks//{amount}//activatedby//')])
                     if int(file_count) == int(usersamounto) + 1:
                         shutil.rmtree(f'{dbfolder}//checks//{amount}//')
-            except Exception as e:
-                await ctx.reply(f'К сожалению этого чека не существует.\n{e}')
+            except:
+                await ctx.reply(f'К сожалению этого чека не существует.')
     else:
         await ctx.reply(f'Есть 3 опции:\ncreate\nactivate\ndelete\n\nПример: {prefix}check create 12 5')
         
