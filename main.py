@@ -27,7 +27,7 @@ prefix = "w!"
 
 admins = ['758627807818678293', '1065647424061849682', '885126796440395778', '1132291939455205386'] # цыфры в строчках пиздец!!!!!!
 
-botver = "0.1.1"
+botver = "0.1.2"
 
 print('Успешно!')
 
@@ -91,7 +91,7 @@ async def balance(ctx, option=None, otheruserid=None, amount=None):
             
 @bot.command()
 async def check(ctx, option=None, amount=None, usersamount=None): #amount является гибридной хернёй для create, activate и delete
-    '''Создаёт, активирует и удаляет чек'''
+    '''Создаёт, активирует и удаляет чек.'''
     user_id = str(ctx.author.id)
     try:
         stramount = str(float(amount))
@@ -106,6 +106,9 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
         print('')
         try:
             createwallet(user_id)
+            balancefile = open(f'{dbfolder}//userbal//{user_id}//balance.txt', 'r')
+            userbalance = str(float(balancefile.read()))
+            balancefile.close()
             print('')
         except Exception as e:
             await ctx.reply(f'Хм... Что-то пошло не так.\n{e}')
@@ -174,20 +177,20 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
                     file_count = sum([len(files) for _, _, files in os.walk(f'{dbfolder}//checks//{amount}//activatedby//')])
                     if int(file_count) == int(usersamounto) + 1:
                         shutil.rmtree(f'{dbfolder}//checks//{amount}//')
-            except:
-                await ctx.reply(f'К сожалению этого чека не существует.')
+            except Exception as e:
+                await ctx.reply(f'К сожалению этого чека не существует.\n{e}')
     else:
         await ctx.reply(f'Есть 3 опции:\ncreate\nactivate\ndelete\n\nПример: {prefix}check create 12 5')
         
 
 @bot.command()
 async def about(ctx):
-    '''О боте'''
+    '''О боте.'''
     await ctx.reply(f'Данный бот основан на Stupid Discord Wallet.\nЭтот бот умеет только хранить ваши {botcurrency}, создавать и активировать чеки.\nЭто простой фэйковый крипто-кошелёк официально продать или купить {botcurrency} нельзя.\nРазработчики - @drel69 (TG)\n\nО проекте:\nStupid Discord Wallet был сделан с нуля не используя исходники самого Stupid Wallet в телеграме.\nПроект Open-Source поэтому каждый может его запустить со своими плюшками ({prefix}github)\n\n Версия бота: {botver}')
     
 @bot.command()
 async def github(ctx):
-    '''Github Бота'''
+    '''Github Бота.'''
     await ctx.reply(f'https://github.com/drel4/stupid_discord_wallet')
 
 print('Запускаю наконец бота...')
