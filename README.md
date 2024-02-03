@@ -1,2 +1,7 @@
-# stupid_discord_wallet
-Stupid Wallet in Discord
+# Stupid Discord Wallet
+Это простой фэйковый крипто-кошелёк официально продать или купить крипту бота нельзя.
+Stupid Discord Wallet был сделан с нуля не используя исходники самого Stupid Wallet в телеграме.
+Этот проект был сделан потому-что мой друг планирует делать своего аналога Stupid Wallet в тг Open-Source
+
+# Модули
+discord.py 1.7.3
