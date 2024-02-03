@@ -9,8 +9,8 @@ print('Успешно!')
 
 print('Творим Говно...')
 def createwallet(user_idi):
-    os.mkdir(f'{dbfolder}//userbal//{user_id}')
-    balancefile = open(f'{dbfolder}//userbal//{user_id}//balance.txt', 'w')
+    os.mkdir(f'{dbfolder}//userbal//{user_idi}')
+    balancefile = open(f'{dbfolder}//userbal//{user_idi}//balance.txt', 'w')
     balancefile.write('0')
     balancefile.close()
     
@@ -26,6 +26,8 @@ botcurrency = "ScrewCoin"
 prefix = "w!"
 
 admins = ['758627807818678293', '1065647424061849682', '885126796440395778', '1132291939455205386'] # цыфры в строчках пиздец!!!!!!
+
+botver = "0.1.1"
 
 print('Успешно!')
 
@@ -177,10 +179,16 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
     else:
         await ctx.reply(f'Есть 3 опции:\ncreate\nactivate\ndelete\n\nПример: {prefix}check create 12 5')
         
+
 @bot.command()
 async def about(ctx):
     '''О боте'''
-    await ctx.reply(f'Данный бот основан на Stupid Discord Wallet.\nЭтот бот умеет только хранить ваши {botcurrency}, создавать и активировать чеки.\nЭто простой фэйковый крипто-кошелёк официально продать или купить {botcurrency} нельзя.\nРазработчики - @drel69 (TG)\n\nО проекте:\nStupid Discord Wallet был сделан с нуля не используя исходники самого Stupid Wallet в телеграме.\nПроект Open-Source поэтому каждый может его запустить со своими плюшками ({prefix}github)')
+    await ctx.reply(f'Данный бот основан на Stupid Discord Wallet.\nЭтот бот умеет только хранить ваши {botcurrency}, создавать и активировать чеки.\nЭто простой фэйковый крипто-кошелёк официально продать или купить {botcurrency} нельзя.\nРазработчики - @drel69 (TG)\n\nО проекте:\nStupid Discord Wallet был сделан с нуля не используя исходники самого Stupid Wallet в телеграме.\nПроект Open-Source поэтому каждый может его запустить со своими плюшками ({prefix}github)\n\n Версия бота: {botver}')
+    
+@bot.command()
+async def github(ctx):
+    '''Github Бота'''
+    await ctx.reply(f'https://github.com/drel4/stupid_discord_wallet')
 
 print('Запускаю наконец бота...')
 bottokenfile = open(f'token.txt', 'r')
