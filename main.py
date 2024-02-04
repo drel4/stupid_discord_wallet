@@ -27,7 +27,7 @@ prefix = "w!"
 
 admins = ['758627807818678293', '1065647424061849682', '885126796440395778', '1132291939455205386'] # цыфры в строчках пиздец!!!!!!
 
-botver = "0.1.2"
+botver = "0.1.3"
 
 print('Успешно!')
 
@@ -109,7 +109,6 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
             balancefile = open(f'{dbfolder}//userbal//{user_id}//balance.txt', 'r')
             userbalance = str(float(balancefile.read()))
             balancefile.close()
-            print('')
         except Exception as e:
             await ctx.reply(f'Хм... Что-то пошло не так.\n{e}')
     if option == "create":
@@ -177,6 +176,40 @@ async def check(ctx, option=None, amount=None, usersamount=None): #amount явл
                     file_count = sum([len(files) for _, _, files in os.walk(f'{dbfolder}//checks//{amount}//activatedby//')])
                     if int(file_count) == int(usersamounto) + 1:
                         shutil.rmtree(f'{dbfolder}//checks//{amount}//')
+            except:
+                await ctx.reply(f'К сожалению этого чека не существует.')
+                
+    elif option == "delete":
+        if amount == None:
+            await ctx.reply(f'Вот так должна выглядить команда для удаления чека: {prefix}check delete [ID Чека]')
+        else:
+            try:
+                checkownerfile = open(f'{dbfolder}//checks//{amount}//checkowner.txt', 'r')
+                checkowner = checkownerfile.read()
+                checkownerfile.close()
+                if user_id == checkowner or user_id in admins:
+                    checkamountfileo = open(f'{dbfolder}//checks//{amount}//checkamount.txt', 'r')
+                    amounto = checkamountfileo.read()
+                    checkamountfileo.close()
+                    tempvaro = float(userbalance) + float(amounto)
+                    if user_id in admins:
+                        balancefileo = open(f'{dbfolder}//userbal//{checkowner}//balance.txt', 'r')
+                        userbalance = str(float(balancefileo.read()))
+                        balancefileo.close()
+                        tempvaroo = float(userbalance) + float(amounto)
+                        balancefileo = open(f'{dbfolder}//userbal//{checkowner}//balance.txt', 'w')
+                        balancefileo.write(str(tempvaroo))
+                        balancefileo.close()
+                        await ctx.reply(f'<@{checkowner}> получил свои {amounto} {botcurrency} назад!')
+                    else:
+                        balancefile = open(f'{dbfolder}//userbal//{user_id}//balance.txt', 'w')
+                        balancefile.write(str(tempvaro))
+                        balancefile.close()
+                        await ctx.reply(f'Вы получили {amounto} {botcurrency} назад!')
+                    shutil.rmtree(f'{dbfolder}//checks//{amount}//')
+                    await ctx.reply(f'Чек был удалён.\nID Чека: {amount}')
+                else:
+                    await ctx.reply(f'Вы не владелец чека.\nID Чека: {amount}')
             except:
                 await ctx.reply(f'К сожалению этого чека не существует.')
     else:
