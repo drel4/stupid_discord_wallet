@@ -27,7 +27,7 @@ prefix = "w!"
 
 admins = ['758627807818678293', '1065647424061849682', '885126796440395778', '1132291939455205386'] # цыфры в строчках пиздец!!!!!!
 
-botver = "0.1.3"
+botver = "0.1.3.1"
 
 print('Успешно!')
 
@@ -38,6 +38,7 @@ print('Успешно!')
 @bot.event
 async def on_ready():
     print(f'Бот {bot.user.name} был запущен успешно!')
+    await bot.change_presence(activity=discord.Game(name="w!help"))
 
 @bot.command()
 async def balance(ctx, option=None, otheruserid=None, amount=None):
